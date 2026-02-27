@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Hany Market</title>
+
+<style>
+body{
+  background:#121418;
+  color:white;
+  padding:30px;
+  font-family:'Segoe UI',Tahoma,sans-serif;
+}
+body {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.product-card, .admin-form, .stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+/* Header */
+.dashboard-header h1{
+  font-size:28px;
+  background:linear-gradient(90deg,#ff385c,#ff7f91);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* Stat Cards */
+.stat-card{
+  background:rgba(255,255,255,0.05);
+  padding:15px 25px;
+  border-radius:15px;
+  transition:0.3s;
+  cursor:pointer;
+}
+.stat-card:hover{
+  transform:translateY(-5px);
+  background:rgba(255,56,92,0.15);
+  box-shadow:0 10px 20px rgba(255,56,92,0.3);
+}
+
+/* Admin Form */
+.admin-form{
+  background:rgba(255,255,255,0.07);
+  padding:25px;
+  border-radius:20px;
+  margin-bottom:30px;
+  transition:0.3s;
+}
+.admin-form:hover{
+  box-shadow:0 0 25px rgba(255,56,92,0.2);
+}
+.admin-form input, .admin-form select{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:12px;
+  border:none;
+  background:#1e1f25;
+  color:white;
+  transition:0.3s;
+}
+.admin-form input:focus{
+  outline:none;
+  background:#2c2d36;
+  box-shadow:0 0 12px #ff385c;
+}
+
+/* Buttons */
+/* تصميم الزراير الجديد */
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px; /* جعل الزرار بيضاوي وعصري */
+    background: linear-gradient(135deg, #ff385c 0%, #e61e4d 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    outline: none;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.02); /* حركة خفيفة للأعلى */
+    box-shadow: 0 8px 25px rgba(255, 56, 92, 0.5);
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* زرار الحذف (أحمر نيون) */
+.delete-btn {
+    background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+    box-shadow: 0 4px 12px rgba(255, 75, 43, 0.2);
+    border-radius: 12px; /* شكل مختلف قليلاً للحذف */
+    padding: 8px 18px;
+}
+
+.delete-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 75, 43, 0.4);
+}
+
+/* زرار حذف العرض (برتقالي ذهبي) */
+.offer-btn {
+    background: linear-gradient(135deg, #f09819 0%, #edde5d 100%);
+    color: #000;
+    box-shadow: 0 4px 12px rgba(240, 152, 25, 0.2);
+    border-radius: 12px;
+}
+
+/* زرار الخروج (شفاف بحدود) */
+button[onclick="logout()"] {
+    background: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    margin-top: 40px;
+    color: #ff7f91;
+}
+
+button[onclick="logout()"]:hover {
+    background: rgba(255, 56, 92, 0.1);
+    border-color: #ff385c;
+}
+/* تنسيق حاوية الأزرار العليا */
+.top-buttons {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+/* التنسيق الجديد الموحد للأزرار العلوية */
+.top-buttons button {
+    background: rgba(255, 255, 255, 0.03); /* خلفية شفافة جداً */
+    backdrop-filter: blur(12px); /* تأثير الزجاج الضبابي */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1); /* إطار خفيف */
+    color: #eee;
+    padding: 12px 24px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+/* زر عرض المنتجات - لمسة لون خفيفة */
+.store-btn {
+    border-right: 4px solid #ff385c !important; /* خط جانبي ملون لتمييزه */
+}
+
+/* زر تبديل الوضع */
+.theme-btn {
+    border-right: 4px solid #ff7f91 !important;
+}
+
+/* تأثير الـ Hover (التحويم) */
+.top-buttons button:hover {
+    background: rgba(255, 56, 92, 0.1); /* يقلب للون الماركت عند اللمس */
+    border-color: rgba(255, 56, 92, 0.4);
+    transform: translateY(-5px);
+    color: white;
+    box-shadow: 0 15px 35px rgba(255, 56, 92, 0.2);
+}
+
+/* أيقونات داخل الأزرار (اختياري لو ضفتها في HTML) */
+.top-buttons button i {
+    font-size: 18px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+}
+
+/* التنسيق في الوضع الفاتح */
+body.light-theme .top-buttons button {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+body.light-theme .top-buttons button:hover {
+    background: rgba(255, 56, 92, 0.05);
+    color: #ff385c;
+}
+/* Sections */
+.section h2{
+  margin-bottom:15px;
+  color:#ff385c;
+}
+
+/* Product Cards */
+.product-card{
+  background:rgba(255,255,255,0.05);
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:0.3s;
+}
+.product-card:hover{
+  transform:translateX(-5px);
+  background:rgba(255,56,92,0.1);
+  box-shadow:0 5px 15px rgba(255,56,92,0.3);
+}
+
+.delete-btn{
+  background:#d32f2f;
+}
+.delete-btn:hover{
+  box-shadow:0 8px 15px rgba(211,47,47,0.4);
+}
+
+.offer-btn{
+  background:#ff7043;
+}
+.offer-btn:hover{
+  box-shadow:0 8px 15px rgba(255,112,67,0.4);
+}
+/* الوضع الأبيض الفخم - Clean Luxury */
+body.light-theme {
+    background: #eef2f7 !important; /* لون ثلجي هادي */
+    color: #2d3436 !important;
+}
+
+/* الكروت في الوضع الأبيض - تأثير النيومورفيزم */
+body.light-theme .admin-form, 
+body.light-theme .product-card, 
+body.light-theme .stat-card {
+    background: #ffffff !important;
+    border: none !important;
+    /* ظل مزدوج بيدي إحساس إن الكارت بارز بجد */
+    box-shadow: 9px 9px 16px rgba(163, 177, 198, 0.4), 
+                -9px -9px 16px rgba(255, 255, 255, 0.8) !important;
+    border-radius: 20px !important;
+}
+
+/* المدخلات (Inputs) بشكل غاطس لجوه */
+body.light-theme .admin-form input, 
+body.light-theme .admin-form select {
+    background: #eef2f7 !important;
+    border: none !important;
+    box-shadow: inset 5px 5px 10px rgba(163, 177, 198, 0.5), 
+                inset -5px -5px 10px rgba(255, 255, 255, 0.8) !important;
+    color: #333 !important;
+}
+
+/* العناوين والـ Header */
+body.light-theme .dashboard-title {
+    background: linear-gradient(90deg, #ff385c, #8e2de2); /* تدرج ألوان حيوي أكتر */
+    -webkit-background-clip: text;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));
+}
+
+body.light-theme .section h2 {
+    color: #333 !important;
+    background: white;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 50px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.05);
+}
+</style>
+</head>
+<body>
+<div class="top-buttons">
+  <button class="store-btn" onclick="goToStore()">
+    <span>🛒</span> عرض المتجر
+  </button>
+  <button class="theme-btn" onclick="toggleTheme()">
+    <span>🌗</span> تبديل الوضع
+  </button>
+</div>
+<div class="dashboard-header">
+ <h1 class="dashboard-title">HANY MARKET</h1>
+
+<style>
+.dashboard-title{
+  text-align:center; /* في النص أفقياً */
+  font-size:120px; /* تكبير النص */
+  font-weight:bold;
+  background:linear-gradient(90deg,#ff385c,#ff7f91,#ffb6c1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow: 0 6px 25px rgba(255,56,92,0.3); /* ظل أكبر مع الحجم */
+  margin-bottom:40px;
+  transition:0.3s;
+  cursor:default;
+}
+
+.dashboard-title:hover{
+  transform:scale(1.08);
+  text-shadow:0 8px 35px rgba(255,56,92,0.6); /* تأثير أقوى عند hover */
+}
+</style>
+  <div class="stats">
+    <div class="stat-card">
+      <span>عدد المنتجات</span>
+      <h3 id="productCount">0</h3>
+    </div>
+    <div class="stat-card">
+      <span>عدد العروض</span>
+      <h3 id="offerCount">0</h3>
+    </div>
+  </div>
+</div>
+
+<div class="admin-form">
+  <input type="text" id="pName" placeholder="اسم المنتج" autocomplete="off">
+<input type="number" id="pPrice" placeholder="السعر" autocomplete="off">
+<input type="number" id="pOffer" placeholder="سعر العرض (اختياري)" autocomplete="off">
+<input type="text" id="pImage" placeholder="رابط الصورة" autocomplete="off">
+  <select id="pCat">
+    <option value="meat">لحوم</option>
+    <option value="dairy">ألبان</option>
+    <option value="grocery">بقالة</option>
+    <option value="TTT">مستحضرات</option>
+  </select>
+ <button onclick="adminAddProduct()" style="width: 100%; margin-top: 10px; height: 50px; font-size: 16px;">
+    ✨ إضافة منتج جديد للمتجر
+</button>
+</div>
+
+<div class="section">
+  <h2>🔥 العروض</h2>
+  <div id="offersList"></div>
+</div>
+
+<div class="section">
+  <h2>📦 كل المنتجات</h2>
+  <div id="productsList"></div>
+</div>
+<button onclick="logout()" style="margin-bottom:20px;">تسجيل خروج</button>
+
+<script>
+ document.addEventListener("DOMContentLoaded", () => {
+  const productsList = document.getElementById('productsList');
+  const offersList = document.getElementById('offersList');
+  const productCount = document.getElementById('productCount');
+  const offerCount = document.getElementById('offerCount');
+
+  if(localStorage.getItem("isAdminLoggedIn") !== "true"){
+    window.location.href = "login.html";
+  }
+
+  let products = JSON.parse(localStorage.getItem('hanyProducts')) || [];
+
+  function adminAddProduct(){
+    const n = pName.value.trim();
+    const p = parseInt(pPrice.value);
+    const o = pOffer.value.trim();
+    const cat = pCat.value;
+
+    if(!n || !p) return;
+
+    const newProduct = {
+      id: Date.now(),
+      name: n,
+      price: p,
+      cat: cat,
+      img: pImage.value.trim() || 'img/hany.png'
+    };
+
+    if(o) newProduct.offerPrice = parseInt(o);
+
+    products.push(newProduct);
+    localStorage.setItem('hanyProducts', JSON.stringify(products));
+    renderAll();
+
+    pName.value=''; pPrice.value=''; pOffer.value=''; pImage.value='';
+  }
+
+  function renderAll(){
+    renderProducts();
+    renderOffers();
+    productCount.innerText = products.length;
+    offerCount.innerText = products.filter(p=>p.offerPrice).length;
+  }
+
+  function renderProducts(){
+    productsList.innerHTML = products.map(p => `
+      <div class="product-card">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <img src="${p.img || 'img/hany.png'}" 
+               onerror="this.src='img/hany.png'"
+               alt="${p.name}"
+               style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
+          <div>
+            ${p.name} - ${p.price} ج 
+            ${p.offerPrice ? `<span style="color:#f59e0b">🔥 ${p.offerPrice} ج</span>` : ""}
+          </div>
+        </div>
+        <button class="delete-btn" onclick="deleteProduct(${p.id})">حذف</button>
+      </div>
+    `).join('');
+  }
+
+  function renderOffers(){
+    const offers = products.filter(p => p.offerPrice);
+    offersList.innerHTML = offers.length == 0
+      ? "لا يوجد عروض"
+      : offers.map(p => `
+        <div class="product-card">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <img src="${p.img || 'img/hany.png'}"
+                 onerror="this.src='img/hany.png'"
+                 alt="${p.name}"
+                 style="width:60px;height:60px;object-fit:cover;border-radius:10px;">
+            <div>${p.name} - ${p.price} ج → 🔥 ${p.offerPrice} ج</div>
+          </div>
+          <button class="offer-btn" onclick="removeOffer(${p.id})">حذف العرض</button>
+        </div>
+      `).join('');
+  }
+
+  function deleteProduct(id){
+    products = products.filter(p => p.id !== id);
+    localStorage.setItem('hanyProducts', JSON.stringify(products));
+    renderAll();
+  }
+
+  function removeOffer(id){
+    products = products.map(p=>{
+      if(p.id===id) delete p.offerPrice;
+      return p;
+    });
+    localStorage.setItem('hanyProducts', JSON.stringify(products));
+    renderAll();
+  }
+
+  renderAll();
+
+  window.adminAddProduct = adminAddProduct;
+  window.deleteProduct = deleteProduct;
+  window.removeOffer = removeOffer;
+
+  window.logout = () => {
+    localStorage.removeItem("isAdminLoggedIn");
+    window.location.href = "login.html";
+  };
+
+  window.goToStore = () => {
+    window.location.href = "index.html";
+  };
+
+  window.toggleTheme = () => {
+    document.body.classList.toggle('light-theme');
+    const isLight = document.body.classList.contains('light-theme');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    const themeBtn = document.querySelector('.theme-btn span');
+    themeBtn.innerText = isLight ? '🌙' : '☀️';
+  };
+});
+</script>
+
+</body>
+</html>
