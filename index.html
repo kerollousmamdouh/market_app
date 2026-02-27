@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hany Market | المتجر الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --main-red: #ff4757;
+            --whatsapp-green: #25d366;
+            --dark-bg: #1a1a1a;
+            --soft-gray: #f8f9fa;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+       body {
+    background: 
+    linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+    url("https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=1600");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #222;
+}
+
+        /* تأثيرات الدخول */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                right: -100%;
+            }
+
+            to {
+                right: 0;
+            }
+        }
+        
+        /* الهيدر */
+     header {
+    background: rgba(255,71,87,0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+  /* 1. تنسيق الحاوية (اللوجو والتاريخ تحت بعض) */
+.hany-logo-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    line-height: 1.1 !important;
+    user-select: none;
+    animation: hanyPulse 4s infinite ease-in-out;
+}
+
+/* 2. وضع اللايت (إجباري أبيض عشان الشريط أحمر) */
+.hany-text {
+    color: #ffffff !important; 
+    font-weight: 900 !important;
+    font-size: 1.8rem !important;
+    text-transform: uppercase !important;
+}
+
+.hany-since {
+    color: #ffffff !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 4px !important;
+    margin-top: 2px !important;
+    opacity: 0.9 !important;
+}
+
+/* 3. وضع الدارك (يقلب أحمر فقط لما كلاس dark-mode يتفعل) */
+body.dark-mode .hany-text {
+    color: var(--main-red) !important;
+    text-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+}
+
+body.dark-mode .hany-since {
+    color: var(--main-red) !important;
+    opacity: 1 !important;
+}
+
+/* 4. الأنيميشن */
+@keyframes hanyPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+}
+
+        .nav-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+
+        .icon-btn:hover {
+            background: white;
+            color: var(--main-red);
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: black;
+            color: white;
+            font-size: 0.7rem;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--main-red);
+        }
+
+        /* البحث والأقسام */
+        .hero {
+            padding: 30px 5%;
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 2px solid #eee;
+            outline: none;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .search-input:focus {
+            border-color: var(--main-red);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.2);
+        }
+
+       .cat-btn {
+    padding: 12px 28px;
+    border: 2px solid transparent;
+    background: rgba(255,71,87,0.08);
+    color: var(--main-red);
+    border-radius: 50px;
+    margin: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.cat-btn:hover {
+    background: var(--main-red);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,71,87,0.3);
+}
+
+.cat-btn.active {
+    background: var(--main-red);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255,71,87,0.4);
+}
+
+        /* كروت المنتجات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            padding: 40px 5%;
+            animation: fadeIn 0.8s ease;
+        }
+:root {
+    --main-red: #d63031;        /* أحمر حيوي */
+    --dark-red: #a82324;        /* أحمر غامق للفخامة */
+    --soft-red: rgba(214, 48, 49, 0.05);
+    --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+    padding: 18px;
+    box-shadow: 0 15px 35px rgba(214, 48, 49, 0.08); /* ظل مائل للأحمر خفيف جداً */
+    border: 1.5px solid #f0f0f0;
+    text-align: center;
+    z-index: 1;
+}
+
+/* تأثير الـ Hover على الكارت بالكامل */
+.card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: var(--main-red);
+    box-shadow: 0 25px 50px rgba(214, 48, 49, 0.15);
+}
+
+/* تنسيق الصورة */
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: var(--soft-red); /* خلفية حمراء باهتة جداً للصورة */
+    border-radius: 20px;
+    padding: 20px;
+    transition: var(--transition);
+}
+
+.card:hover img {
+    transform: scale(1.05);
+    background: #fff; /* الصورة تفتح خلفيتها عند الهوفر */
+}
+
+/* النصوص */
+.card h3 {
+    font-size: 19px;
+    margin: 20px 0 8px;
+    font-weight: 700;
+    color: #2d3436;
+    transition: 0.3s;
+}
+
+.card:hover h3 {
+    color: var(--main-red); /* العنوان يتغير للأحمر عند الهوفر */
+}
+
+.price {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--main-red);
+    margin-bottom: 18px;
+    display: block;
+}
+
+/* الزرار الأحمر الاحترافي */
+.btn-add {
+    width: 100%;
+    padding: 15px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--main-red) 0%, var(--dark-red) 100%);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(214, 48, 49, 0.3);
+}
+
+/* تأثير اللمعة المتحركة على الزرار */
+.btn-add::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.btn-add:hover::before {
+    left: 100%;
+}
+
+.btn-add:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 25px rgba(214, 48, 49, 0.4);
+    filter: brightness(1.1);
+}
+
+.btn-add:active {
+    transform: scale(0.95);
+}
+
+/* إضافة Badge "جديد" أو "خصم" كـ انيميشن إضافي */
+.card::before {
+    content: 'HOT';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--main-red);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: 0 5px 10px rgba(214, 48, 49, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+        /* نوافذ مودال (Modal) */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 30px;
+            padding: 30px;
+            animation: cartShow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+      @keyframes cartShow {
+    from {
+        transform: translateY(80px) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+        /* التنبيه العائم (Toast) */
+        #toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--dark-bg);
+  color: white;
+  padding: 14px 22px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(40px) scale(0.9);
+  transition: all 0.4s ease;
+  z-index: 9999;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+        /* لوحة الإدمن */
+        #admin-page {
+            display: none;
+            padding: 40px 5%;
+            animation: fadeIn 0.5s;
+        }
+
+        .admin-form {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .admin-form input,
+        .admin-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+      /* ====== Footer عصري ====== */
+footer {
+    background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+    color: #f5f5f5;
+    padding: 70px 6% 25px;
+    margin-top: 60px;
+    border-top: 5px solid var(--main-red);
+    font-family: "Cairo", sans-serif;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-section h3 {
+    color: var(--main-red);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    position: relative;
+    padding-bottom: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--main-red);
+    border-radius: 3px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #bbb;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.footer-links li:hover {
+    color: #fff;
+    transform: translateX(-8px);
+}
+
+.footer-links i {
+    color: var(--main-red);
+    font-size: 1.2rem;
+}
+
+/* ====== Social Icons ====== */
+.social-icons {
+    display: flex;
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.social-icons a {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    transition: 0.4s ease;
+}
+
+.social-icons a:hover {
+    background: var(--main-red);
+    transform: translateY(-10px) scale(1.2) rotate(360deg);
+    box-shadow: 0 12px 28px rgba(255,71,87,0.45);
+}
+
+/* ====== 1. الخلفية الشفافة (Deep Blur) ====== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(15px); /* تأثير الزجاج الضبابي */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* ====== 2. صندوق المودال (Luxury Card) ====== */
+.modal-content {
+    background: #ffffff;
+    padding: 35px 25px;
+    border-radius: 40px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    animation: openModal 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes openModal {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ====== 3. اسم المنتج (The Hero Text) ====== */
+#targetName {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0 0 10px 0;
+    /* تدريج لوني جذاب */
+    background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 20px rgba(255, 0, 0, 0.1);
+}
+
+/* ====== 4. أزرار الأوزان (Smart Chips) ====== */
+.weight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.btn-weight {
+    padding: 15px 10px;
+    border: 1.5px solid #f2f2f2;
+    border-radius: 18px;
+    background: #fdfdfd;
+    font-weight: 800;
+    color: #444;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-weight:hover {
+    border-color: #ff0000;
+    color: #ff0000;
+    background: #fffafa;
+}
+
+/* حاوية خيار المبلغ المخصص */
+.custom-price-wrapper {
+    margin-top: 25px;
+    padding: 20px;
+    background: #fffafa; /* خلفية حمراء باهتة جداً */
+    border-radius: 25px;
+    border: 1px dashed #ffcccc; /* إطار منقط يعطي شكل "كوبون" أو منطقة إدخال */
+}
+
+/* حاوية خيار المبلغ المخصص - جعلناها تبدو كأنها كارت منفصل */
+.custom-price-wrapper {
+    margin-top: 25px;
+    padding: 25px 20px;
+    background: linear-gradient(145deg, #ffffff, #fff5f5);
+    border-radius: 30px;
+    border: 1px solid #ffebeb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* العنوان الصغير فوق الحقل */
+.price-tag-label {
+    font-size: 0.9rem;
+    color: #cc0000;
+    font-weight: 800;
+    margin-bottom: 12px;
+    display: block;
+    text-transform: uppercase;
+}
+
+/* حقل إدخال المبلغ - تصميم زجاجي عصري */
+#customPrice {
+    width: 100%;
+    padding: 20px !important;
+    border: 2px solid #f0f0f0 !important;
+    border-radius: 20px !important;
+    font-size: 1.5rem; /* خط كبير للمبلغ */
+    font-weight: 900;
+    text-align: center;
+    color: #1a1a1a;
+    background: #ffffff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+#customPrice:focus {
+    border-color: #ff0000 !important;
+    background: #fff;
+    box-shadow: 0 15px 30px rgba(255, 0, 0, 0.1) !important;
+    transform: translateY(-2px);
+}
+
+/* زر تأكيد المبلغ - تصميم عريض ومبهر */
+.btn-price-confirm {
+    width: 100%;
+    margin-top: 15px;
+    padding: 20px;
+    background: #000; /* الأسود بيدي هيبة مع الأحمر */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* تأثير اللمعة (Shine) على الزرار */
+.btn-price-confirm::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.btn-price-confirm:hover::after {
+    left: 100%;
+}
+
+.btn-price-confirm:hover {
+    background: #ff0000; /* يتحول للأحمر عند الهوفر */
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 0, 0, 0.3);
+}
+/* ====== 6. تحكم الكمية (Floating Capsule) ====== */
+.qty-control {
+    background: #f8f8f8;
+    padding: 10px 15px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 250px;
+    border: 1px solid #eee;
+}
+
+.qty-input {
+    background: transparent;
+    border: none;
+    text-align: center;
+    font-size: 32px;
+    font-weight: 900;
+    color: #111;
+    width: 80px;
+}
+
+/* ====== 1. هوفر أزرار الكمية (Pulse & Glow) ====== */
+.btn-circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    background: #ff0000;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+}
+
+.btn-circle:hover {
+    transform: scale(1.15) rotate(90deg); /* تكبير مع دوران خفيف */
+    background: #000; /* يتحول للأسود الشيك عند الوقوف عليه */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn-circle:active {
+    transform: scale(0.95); /* تأثير الضغطة */
+}
+
+/* ====== 7. الأزرار النهائية (Action Buttons) ====== */
+.btn-confirm {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #ff0000 0%, #b30000 100%);
+    color: white;
+    border-radius: 22px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border: none;
+    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.btn-confirm:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(255, 0, 0, 0.4);
+}
+/* ====== 2. هوفر كلمة "إلغاء" (Elegant Hover) ====== */
+.modal-content button[onclick*="style.display='none'"] {
+    margin-top: 15px;
+    background: none;
+    border: none;
+    color: #95a5a6;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 10px;
+}
+
+.modal-content button[onclick*="style.display='none'"]:hover {
+    color: #ff0000; /* يتحول للأحمر */
+    letter-spacing: 1px; /* تباعد الحروف يعطي شكل مودرن */
+    transform: translateY(-2px);
+}
+
+/* إضافة خط سفلي يظهر عند الهوفر للإلغاء */
+.modal-content button[onclick*="style.display='none'"]::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #ff0000;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.modal-content button[onclick*="style.display='none'"]:hover::after {
+    width: 80%; /* الخط يفرش تحت الكلمة */
+}
+
+/* ====== 3. تأثير إضافي لاسم المنتج (Glow Effect) ====== */
+#targetName:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.3));
+    cursor: default;
+}
+
+/* ====== 4. تحسين شكل حقل عدد القطع ====== */
+.qty-input:focus {
+    outline: none;
+    color: #ff0000;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+.premium-label {
+    color: #1a1a1a; /* لون أسود قوي */
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* إضافة شرطات حمراء أنيقة حول الكلمة */
+.premium-label::before, .premium-label::after {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #ff0000; /* اللون الأحمر بتاعك */
+    border-radius: 2px;
+}
+
+/* زر التأكيد للمبلغ (جعله أسود شيك) */
+#dairyOptions .btn-confirm[onclick="confirmQty()"] {
+    background: #1a1a1a;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}/* 1. حاوية قسم العروض بالكامل */
+.offers-section {
+    padding: 40px 5%;
+    background: #fdfdfd; /* خلفية فاتحة جداً لإبراز الكروت */
+    margin: 30px 0;
+    border-radius: 30px;
+    border: 1px dashed rgba(214, 48, 49, 0.2); /* إطار منقط خفيف يوحي بالعروض */
+}
+
+.offers-section h2 {
+    color: var(--dark-red);
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+}
+
+/* 2. شبكة العروض */
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+/* 3. كارت العرض (نفس تصميم الكارت الذي أعجبك) */
+.offer-card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+    padding: 18px;
+    box-shadow: 0 15px 35px rgba(214, 48, 49, 0.08);
+    border: 1.5px solid #f0f0f0;
+    text-align: center;
+}
+
+.offer-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: var(--main-red);
+    box-shadow: 0 25px 50px rgba(214, 48, 49, 0.15);
+}
+
+/* صورة العرض */
+.offer-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    background: var(--soft-red);
+    border-radius: 18px;
+    padding: 15px;
+    transition: var(--transition);
+}
+
+.offer-card:hover img {
+    transform: scale(1.05);
+    background: #fff;
+}
+
+/* تنسيق الأسعار داخل العرض */
+.price-container {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #b2bec3;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.new-price {
+    color: var(--main-red);
+    font-weight: 900;
+    font-size: 1.6rem; /* تكبير السعر الجديد */
+    display: block;
+}
+
+/* بادج الخصم (بدل HOT) */
+.offer-card::before {
+    content: 'OFFER';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #00b894; /* لون أخضر للخصم أو أحمر حسب رغبتك */
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: 0 5px 10px rgba(0, 184, 148, 0.2);
+    animation: pulse 2s infinite;
+}
+
+/* زر شراء العرض (نفس الزر الاحترافي) */
+.offer-card .btn-add {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: linear-gradient(135deg, var(--main-red) 0%, var(--dark-red) 100%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 8px 20px rgba(214, 48, 49, 0.2);
+}
+
+.offer-card .btn-add:hover {
+    filter: brightness(1.2);
+    transform: translateY(-2px);
+}
+/* تنسيق الزر العائم على الجانب */
+#darkModeBtn {
+    position: fixed;
+    left: 20px;     /* مكانه على الشمال */
+    bottom: 30px;   /* مرفوع عن الحافة السفلية */
+    width: 60px;
+    height: 60px;
+    background: var(--main-red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+    z-index: 9999;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid white;
+    animation: pulseBtn 2s infinite; /* تأثير النبض */
+}
+
+@keyframes pulseBtn {
+    0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 71, 87, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+}
+
+/* الوضع الليلي للزرار نفسه */
+body.dark-mode #darkModeBtn {
+    background: black; /* لون الشمس */
+    color: #333;
+    border-color: #222;
+    box-shadow: 0 10px 25px rgba(241, 196, 15, 0.4);
+    animation: none; /* نوقف النبض في الوضع الليلي لراحة العين */
+}
+body.dark-mode {
+    background: #111;
+    color: #eee;
+    transition: 0.3s;
+}
+body.dark-mode header {
+    background: #222; /* أو أي لون داكن */
+    color: #eee;
+}
+
+/* الوضع الداكن للنصوص داخل كروت المنتجات */
+body.dark-mode .card h3,
+body.dark-mode .offer-card h3 {
+    color: #fff; /* لون فاتح للنصوص */
+}
+
+body.dark-mode .price,
+body.dark-mode .new-price {
+    color: #ff6b6b; /* لون فاتح متناسق مع الداكن */
+}
+
+/* لو عندك نصوص صغيرة أو وصف */
+body.dark-mode .card p,
+body.dark-mode .offer-card p {
+    color: #ddd;
+}
+body.dark-mode .card,
+body.dark-mode .offer-card,
+body.dark-mode .hero,
+body.dark-mode .products-grid,
+body.dark-mode .offers-section {
+    background: #1a1a1a;
+    color: #eee;
+}
+body.dark-mode .logo {
+    color: var(--main-red); /* جعل النص باللون الأحمر */
+}
+body.dark-mode footer {
+    background: #111;
+    color: #ccc;
+}
+body.dark-mode footer a {
+    color: #bbb;
+}
+body.dark-mode .footer-links li:hover {
+    color: #fff;
+}
+
+body.dark-mode img {
+    filter: brightness(0.8) contrast(1.1);
+}
+
+#darkModeBtn:hover {
+    transform: scale(1.15) rotate(20deg);
+}
+
+/* تعديل للموبايلات عشان مبيكونش فوق أزرار النظام */
+@media (max-width: 600px) {
+    #darkModeBtn {
+        bottom: 120px; /* نرفعه فوق شوية في الموبايل */
+        left: 15px;
+        width: 55px;
+        height: 55px;
+    }
+}
+body.dark-mode img {
+    filter: brightness(0.8) contrast(1.1); /* تقليل السطوع قليلاً لراحة العين */
+    transition: 0.3s;
+}
+
+body.dark-mode img:hover {
+    filter: brightness(1); /* ترجع لطبيعتها لما تقف عليها */
+}
+    </style>
+</head>
+
+<body>
+
+    <div id="toast">
+        <i class="fas fa-shopping-cart" style="color: var(--main-red);"></i>
+        <span id="toastMsg">تم الإضافة!</span>
+    </div>
+    
+  <header style="align-items: center; justify-content: space-between; padding: 0 20px; height: 60px;">
+ <div class="hany-logo-wrapper" onclick="showPage('shop'); window.scrollTo({top:0, behavior:'smooth'});">
+    <span class="hany-text">HANY MARKET</span>
+    <span class="hany-since">SINCE 1999</span>
+</div>
+
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <div id="storeStatus" style="
+            background: #25d366; /* أخضر للفتح */
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        ">
+            <span id="statusDot" style="
+                width: 10px;
+                height: 10px;
+                background: white;
+                border-radius: 50%;
+                display: inline-block;
+            "></span>
+            <span id="statusText">مفتوح الآن</span>
+        </div>
+
+        <div class="nav-icons" style="display: flex; align-items: center; gap: 10px;">
+            <button class="icon-btn" onclick="toggleCart()">
+                <i class="fas fa-shopping-basket"></i>
+                <div class="cart-count" id="cartCount">0</div>
+            </button>
+        </div>
+    </div>
+</header>
+
+    <main id="shop-page">
+        <div class="hero">
+            <input type="text" class="search-input" id="find" onkeyup="search()" placeholder="🔍 ابحث عن طلبك هنا...">
+            <div class="categories">
+                <button class="cat-btn active" onclick="filterCat('all', this)">الكل</button>
+                <button class="cat-btn" onclick="filterCat('meat', this)">🥩 لحوم</button>
+                <button class="cat-btn" onclick="filterCat('dairy', this)">🧀 ألبان</button>
+                <button class="cat-btn" onclick="filterCat('grocery', this)">🛒 بقالة</button>
+                <button class="cat-btn" onclick="filterCat('TTT', this)">🛒 مستحضرات</button>
+            </div>
+        </div>
+        <section class="offers-section">
+  <h2>🔥 العروض الحالية</h2>
+  <div class="offers-grid" id="offersGrid"></div>
+</section>
+        <div class="products-grid" id="grid"></div>
+    </main>
+
+   
+
+   <div id="qtyModal" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="targetName">اسم المنتج</h3>
+        <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+        
+    <div id="dairyOptions" style="display:none;">
+    <div class="weight-grid">
+        <button class="btn-weight" onclick="confirmQty('ثمن كيلو')">ثمن كيلو</button>
+        <button class="btn-weight" onclick="confirmQty('ربع كيلو')">ربع كيلو</button>
+        <button class="btn-weight" onclick="confirmQty('نص كيلو')">نص كيلو</button>
+        <button class="btn-weight" onclick="confirmQty('كيلو')">كيلو</button>
+    </div>
+    
+    <div class="custom-price-wrapper">
+        <span class="price-tag-label">شراء بمبلغ محدد</span>
+        <input type="number" id="customPrice" placeholder="0.00">
+        
+        <button class="btn-price-confirm" onclick="confirmQty()">
+            تأكيد الطلب الآن
+        </button>
+    </div>
+</div>
+
+        <div id="normalOptions" style="display:none;">
+           <p class="premium-label">الكمية المطلوبة</p>
+            <div class="qty-control">
+                <button class="btn-circle" onclick="changeQty(-1)">-</button>
+                <input type="number" id="qtyDisplay" class="qty-input" value="1" min="1">
+                <button class="btn-circle" onclick="changeQty(1)">+</button>
+            </div>
+        </div>
+
+        <button id="confirmNormalBtn" class="btn-confirm" onclick="confirmNormalItem()" style="display:none; margin-top:15px;">إضافة للسلة</button>
+        
+<button onclick="document.getElementById('qtyModal').style.display='none'">إلغاء</button>    </div>
+</div>
+    <audio id="successSound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
+    <div id="deleteModal" class="modal-overlay"> 
+    <div class="modal-content" style="max-width: 320px;"> <div class="delete-box">
+            <h3>هل أنت متأكد من الحذف؟</h3>
+            
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="confirmDelete()" class="yes" style="flex: 1;">نعم</button>
+                <button onclick="closeDelete()" class="no" style="flex: 1;">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <h2 style="text-align:center; margin-bottom:20px;">🛒 سلة طلباتك</h2>
+            <div id="cartItems" style="max-height: 300px; overflow-y: auto; padding: 10px;"></div>
+            <div style="border-top: 2px solid #eee; padding-top:20px; margin-top:10px;">
+                <input type="text" id="custName" placeholder="اسمك"
+                    style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd; margin-bottom:10px;">
+                <input type="text" id="custAddr" placeholder="العنوان بالتفصيل"
+                    style="width:100%; padding:12px; border-radius:10px; border:1px solid #ddd; margin-bottom:15px;">
+                <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem;">
+                    <span>الإجمالي:</span>
+                    <span id="totalPrice" style="color:var(--main-red);">0 ج.م</span>
+                </div>
+                <button class="btn-add" style="background:var(--whatsapp-green); margin-top:20px;"
+                    onclick="sendOrder()">
+                    إرسال الطلب واتساب <i class="fab fa-whatsapp"></i>
+                </button>
+                <button onclick="toggleCart()"
+                    style="width:100%; margin-top:10px; border:none; background:none; color:#999; cursor:pointer;">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <i class="fas fa-times close-modal" onclick="toggleCart()"></i>
+            <h2 style="text-align:center; margin-bottom:25px; color: var(--dark-bg);">
+                سلة المشتريات <span style="color: var(--main-red);">🛒</span>
+            </h2>
+
+            <div id="cartItems" style="max-height: 300px; overflow-y: auto;">
+            </div>
+
+            <div style="margin-top:20px; border-top: 2px dashed #eee; padding-top:20px;">
+                <div style="margin-bottom: 15px;">
+    <input type="text" id="custName" placeholder="👤 اسمك بالكامل" 
+           autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');"
+           style="width:100%; padding:12px; margin-bottom:10px; border-radius:12px; border:1px solid #eee; background: #f9f9f9; outline: none;">
+    
+    <input type="text" id="custAddr" placeholder="📍 العنوان بالتفصيل" 
+           autocomplete="new-password" readonly onfocus="this.removeAttribute('readonly');"
+           style="width:100%; padding:12px; border-radius:12px; border:1px solid #eee; background: #f9f9f9; outline: none;">
+</div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.1rem;">إجمالي الحساب:</h3>
+                    <h3 id="totalPrice" style="color: var(--main-red); font-size: 1.5rem;">0 ج.م</h3>
+                </div>
+
+                <button class="btn-add"
+                    style="background: var(--whatsapp-green); margin-top:20px; height: 55px; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 10px;"
+                    onclick="sendOrder()">
+                    <i class="fab fa-whatsapp"></i> إرسال الطلب للمتجر
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer>
+       
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>HANY MARKET</h3>
+                <p style="color: #999; line-height: 1.8;">نحن في هاني ماركت فخورون بتقديم أجود أنواع اللحوم والألبان
+                    الطازجة يومياً. جودتنا هي سر استمرارنا منذ سنوات.</p>
+                <div class="social-icons">
+                    <a href="#" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="انستجرام"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li onclick="window.scrollTo({top: 0, behavior: 'smooth'}); showPage('shop'); filterCat('all', document.querySelector('.cat-btn'))"
+                        style="cursor:pointer;">
+                        <i class="fas fa-chevron-left"></i> الرئيسية
+                    </li>
+
+                    <li onclick="window.scrollTo({top: 0, behavior: 'smooth'}); filterCat('meat', this)"
+                        style="cursor:pointer;">
+                        <i class="fas fa-chevron-left"></i> قسم اللحوم
+                    </li>
+
+                    <li onclick="window.scrollTo({top: 0, behavior: 'smooth'}); filterCat('dairy', this)"
+                        style="cursor:pointer;">
+                        <i class="fas fa-chevron-left"></i> قسم الألبان
+                    </li>
+
+                    <li onclick="window.scrollTo({top: 0, behavior: 'smooth'}); filterCat('grocery', this)"
+                        style="cursor:pointer;">
+                        <i class="fas fa-chevron-left"></i> قسم البقالة
+                    </li>
+                    <li onclick="window.scrollTo({top: 0, behavior: 'smooth'}); filterCat('TTT', this)"
+                        style="cursor:pointer;">
+                        <i class="fas fa-chevron-left"></i> مستحضرات تجميل
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>تواصل مباشر</h3>
+                <ul class="footer-links">
+                    <li>
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:01274146351" style="color: inherit; text-decoration: none;">01274146351</a>
+                    </li>
+                    <li>
+                        <i class="fab fa-whatsapp"></i>
+                        <a href="https://wa.me/201274146351" target="_blank"
+                            style="color: inherit; text-decoration: none;">راسلنا واتساب</a>
+                    </li>
+                    <li><i class="fas fa-map-marker-alt"></i> القاهرة - فرع الشروق الرئيسي</li>
+                    <li><i class="fas fa-clock"></i> 08:00 ص - 5:00 ص</li>
+                </ul>
+            </div>
+        </div>
+
+        <div
+            style="text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; color: #666;">
+            تصميم وبرمجة المتجر بواسطة <b>Hany Market Dev</b> &copy; 2026
+        </div>
+    </footer>
+    <button id="darkModeBtn" onclick="toggleDarkMode()" title="تبديل الوضع">
+    <i class="fas fa-moon"></i>
+</button>
+    <script>
+        
+        const myNumber = "201274146351";
+        let products = JSON.parse(localStorage.getItem('hanyProducts')) || [
+            { id: 1, name: "لحم موزة بلدي", cat: "meat", price: 380, img: "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400" },
+            { id: 2, name: "فراخ بانيه فريش", cat: "meat", price: 190, img: "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400" },
+            { id: 3, name: "جبنة رومي قديم", cat: "dairy", price: 240, img: "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=400" }
+        ];
+        function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    
+    const isDark = body.classList.contains('dark-mode');
+    
+    // حفظ الحالة في المتصفح
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+
+    // تغيير شكل الأيقونة
+    const icon = document.querySelector('#darkModeBtn i');
+    if (isDark) {
+        icon.className = 'fas fa-sun';
+        icon.style.color = '#f1c40f'; // يخلي الشمس صفراء
+    } else {
+        icon.className = 'fas fa-moon';
+        icon.style.color = 'white';
+    }
+}
+
+
+        let cart = [];
+        let tempProduct = null;
+       function updateStoreStatus() {
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+    const now = new Date();
+    const hour = now.getHours();
+
+    // المحل يفتح من 8 صباحًا حتى 5 فجراً
+    if (hour >= 8 || hour < 5) {
+        statusText.innerText = "مفتوح الآن";
+        statusDot.style.background = "#00ff00"; // نقطة خضراء
+        document.getElementById('storeStatus').style.background = "#25d366";
+    } else {
+        statusText.innerText = "مغلق الآن";
+        statusDot.style.background = "#ff0000"; // نقطة حمراء
+        document.getElementById('storeStatus').style.background = "#ff4757";
+    }
+}
+
+
+       function showToast(msg, type = "success") {
+    const t = document.getElementById('toast');
+    const icon = t.querySelector("i");
+    const sound = document.getElementById("successSound");
+
+    document.getElementById('toastMsg').innerText = msg;
+
+    if (type === "error") {
+        t.style.background = "#ff4757";
+        icon.className = "fas fa-exclamation-circle";
+    } else {
+        t.style.background = "#1e272e";
+        icon.className = "fas fa-check-circle";
+        sound.play(); // 🔊 صوت النجاح
+    }
+
+    t.classList.add("show");
+
+    setTimeout(() => {
+        t.classList.remove("show");
+    }, 2500);
+}
+
+       function show(items) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = items.map(p => `
+        <div class="card">
+            <img src="${p.img}">
+            <h3>${p.name}</h3>
+            <div class="price">
+                ${p.offerPrice ? `<span class="old-price">${p.price} ج.م</span> <span class="new-price">${p.offerPrice} ج.م</span>` : p.price + " ج.م"}
+            </div>
+            <button class="btn-add" onclick="addToCart(${p.id})"><i class="fas fa-plus"></i> إضافة للسلة</button>
+        </div>
+    `).join('');
+}
+
+        // let tempProduct = null; // تعريف المتغير عالمياً ليقرأه confirmQty
+
+// let tempProduct = null;
+
+function addToCart(id) {
+    tempProduct = products.find(p => p.id === id);
+    if (!tempProduct) return;
+
+    document.getElementById('targetName').innerText = tempProduct.name;
+    document.getElementById('qtyModal').style.display = 'flex';
+
+    if (tempProduct.cat === 'dairy') {
+        document.getElementById('dairyOptions').style.display = 'block';
+        document.getElementById('normalOptions').style.display = 'none';
+        document.getElementById('confirmNormalBtn').style.display = 'none';
+    } else {
+        // إعادة تعيين القيمة لـ 1 عند كل فتح
+        document.getElementById('qtyDisplay').value = 1;
+        document.getElementById('dairyOptions').style.display = 'none';
+        document.getElementById('normalOptions').style.display = 'block';
+        document.getElementById('confirmNormalBtn').style.display = 'block';
+    }
+}
+
+// دالة الزائد والناقص (تغير القيمة داخل الـ Input)
+function changeQty(val) {
+    let input = document.getElementById('qtyDisplay');
+    let currentVal = parseInt(input.value) || 1;
+    let newVal = currentVal + val;
+    if (newVal < 1) newVal = 1;
+    input.value = newVal;
+}
+
+function confirmNormalItem() {
+    // قراءة الكمية مباشرة من الـ Input (سواء كتبها المستخدم أو استخدم الأزرار)
+    const qty = parseInt(document.getElementById('qtyDisplay').value) || 1;
+    const priceToUse = tempProduct.offerPrice || tempProduct.price;
+    
+    processAddToCart(tempProduct.name, (priceToUse * qty), `${qty} قطعة`);
+    document.getElementById('qtyModal').style.display = 'none';
+}
+
+// دالة الألبان (كما هي مع دعم سعر العرض)
+function confirmQty(label) {
+    const cashInput = document.getElementById('customPrice');
+    const cashValue = cashInput.value;
+    const priceToUse = tempProduct.offerPrice || tempProduct.price;
+    
+    let finalPrice = 0;
+    let finalDetail = "";
+
+    // 1. لو المستخدم كاتب مبلغ في الخانة
+    if (cashValue && cashValue > 0) {
+        finalPrice = parseInt(cashValue);
+        finalDetail = `بمبلغ ${cashValue} ج.م`;
+    } 
+    // 2. لو المستخدم اختار وزن (ربع، نص، الخ) وماكتبش مبلغ
+    else if (label) {
+        finalDetail = label;
+        if (label.includes("ثمن")) finalPrice = priceToUse / 8;
+        else if (label.includes("ربع")) finalPrice = priceToUse / 4;
+        else if (label.includes("نص")) finalPrice = priceToUse / 2;
+        else finalPrice = priceToUse;
+    } 
+    // 3. لو محددش حاجة خالص (داخل دالة confirmQty)
+else {
+    // إهتزاز المودال لإشعار المستخدم بالخطأ
+    const modalContent = document.querySelector('.modal-content');
+    modalContent.style.animation = 'none';
+    setTimeout(() => modalContent.style.animation = 'shake 0.4s', 10);
+
+    // استخدام الـ Toast بدل الـ alert
+    showToast("⚠️ من فضلك اختار وزن أو اكتب مبلغ أولاً", "error");
+    return;
+}
+
+    // تنفيذ الإضافة للسلة
+    processAddToCart(tempProduct.name, finalPrice, finalDetail);
+    
+    // إخفاء المودال وتفريغ الخانة
+    document.getElementById('qtyModal').style.display = 'none';
+    cashInput.value = '';
+}
+        function processAddToCart(name, price, detail) {
+            cart.push({ name, price: Math.round(price), detail });
+            updateUI();
+            showToast(`تم إضافة ${name} للسلة`);
+        }
+function updateUI() {
+    const cartCount = document.getElementById('cartCount');
+    const itemsDiv = document.getElementById('cartItems');
+    const totalPriceEl = document.getElementById('totalPrice');
+    
+    cartCount.innerText = cart.length;
+    let total = 0;
+    
+    itemsDiv.innerHTML = cart.map((item, index) => {
+        total += item.price;
+        return `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#f9f9f9; padding:10px; border-radius:10px; border-right: 5px solid #27ae60;">
+                <div style="display:flex; flex-direction:column;">
+                    <span style="font-weight:bold;">${item.name}</span>
+                    <small style="color:#666;">${item.detail}</small>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <strong style="margin-left:10px;">${item.price} ج.م</strong>
+                    <i class="fas fa-trash" onclick="removeItem(${index})" style="color:#e74c3c; cursor:pointer;"></i>
+                </div>
+            </div>`;
+    }).join('');
+    
+    totalPriceEl.innerText = total + " ج.م";
+}
+
+        function removeItem(idx) { cart.splice(idx, 1); updateUI(); }
+
+        function sendOrder() {
+    const nameInput = document.getElementById('custName');
+    const addrInput = document.getElementById('custAddr');
+    
+    const name = nameInput.value.trim();
+    const addr = addrInput.value.trim();
+
+    if (!name || !addr || cart.length === 0) {
+        showToast("⚠️ من فضلك كمل بياناتك وأضف منتجات", "error");
+        return;
+    }
+
+    let msg = `🛒 *طلب جديد من هاني ماركت*%0A👤 *العميل:* ${name}%0A📍 *العنوان:* ${addr}%0A-----------------%0A`;
+    cart.forEach(i => msg += `• ${i.name} (${i.detail}) = ${i.price} ج.م%0A`);
+    msg += `-----------------%0A💰 *الإجمالي:* ${document.getElementById('totalPrice').innerText}`;
+
+    // فتح واتساب
+    window.open(`https://wa.me/${myNumber}?text=${msg}`, '_blank');
+
+    // --- التنظيف الفوري بعد الإرسال ---
+    setTimeout(() => {
+        cart = []; // مسح السلة
+        nameInput.value = ""; // مسح الاسم
+        addrInput.value = ""; // مسح العنوان
+        updateUI(); // تحديث شكل السلة الفارغة
+    }, 500); 
+}
+
+       
+
+        function showPage(page) {
+    document.getElementById('shop-page').style.display = page === 'shop' ? 'block' : 'none';
+    document.getElementById('admin-page').style.display = page === 'admin' ? 'block' : 'none';
+
+    // 🔥 حفظ الصفحة المفتوحة
+    localStorage.setItem('lastPage', page);
+}
+
+        let deleteIndex = null;
+
+function askDelete(index) {
+    deleteIndex = index;
+    document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeDelete() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+function confirmDelete() {
+    products.splice(deleteIndex, 1);
+    localStorage.setItem('hanyProducts', JSON.stringify(products));
+    renderOffers();
+    closeDelete();
+    showToast("🗑️ تم الحذف بنجاح");
+}
+// مثال على المنتجات اللي عليها عرض
+let offers = [
+  { id: 101, name: "لحم موزة بلدي", img: "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400", oldPrice: 380, newPrice: 320 },
+  { id: 102, name: "جبنة رومي قديم", img: "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=400", oldPrice: 240, newPrice: 200 },
+];
+
+function renderOffers() {
+    const offersGrid = document.getElementById('offersGrid');
+    const offerProducts = products.filter(p => p.offerPrice && p.offerPrice < p.price);
+
+    if (offerProducts.length === 0) {
+        offersGrid.innerHTML = `<p style="text-align:center; color:gray; grid-column:1/-1;">لا توجد عروض حالياً</p>`;
+        return;
+    }
+
+    offersGrid.innerHTML = offerProducts.map(p => `
+        <div class="offer-card">
+            <img src="${p.img}">
+            <h3>${p.name}</h3>
+            <span class="old-price">${p.price} ج.م</span>
+            <span class="new-price">${p.offerPrice} ج.م</span>
+            <button class="btn-add" onclick="addToCart(${p.id})">
+                <i class="fas fa-plus"></i> إضافة للسلة
+            </button>
+        </div>
+    `).join('');
+}
+
+
+       window.addEventListener('storage', (e) => {
+    if(e.key === 'hanyProducts') {
+        products = JSON.parse(e.newValue);
+        show(products);
+        renderOffers(); // لو عندك عروض
+    }
+});
+        function addNewProduct(productName, category, price, offerPrice, imageUrl) {
+    const newProduct = {
+        id: Date.now(),
+        name: productName,
+        cat: category,
+        price: parseInt(price),
+        offerPrice: offerPrice ? parseInt(offerPrice) : null,
+        img: imageUrl
+    };
+    products.push(newProduct);
+    localStorage.setItem('hanyProducts', JSON.stringify(products));
+    show(products);
+    renderOffers();
+    showToast(`${productName} تم إضافته`);
+}
+
+        function filterCat(c, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            show(c === 'all' ? products : products.filter(p => p.cat === c));
+        }
+
+        function search() {
+            const val = document.getElementById('find').value.toLowerCase();
+            show(products.filter(p => p.name.toLowerCase().includes(val)));
+        }
+
+        function toggleCart() {
+            const m = document.getElementById('cartModal');
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+     document.addEventListener('DOMContentLoaded', () => {
+    const darkBtnIcon = document.querySelector('#darkModeBtn i');
+
+    // تشغيل الوضع الليلي لو كان مفعل قبل كده
+    if(localStorage.getItem('darkMode') === 'enabled'){
+        document.body.classList.add('dark-mode');
+        if(darkBtnIcon){
+            darkBtnIcon.className = 'fas fa-sun';
+            darkBtnIcon.style.color = '#f1c40f';
+        }
+    }
+
+    // تحديث حالة المتجر
+    updateStoreStatus();
+
+    // عرض المنتجات والعروض
+    show(products);
+    renderOffers();
+
+    // إعادة فتح آخر صفحة
+    const lastPage = localStorage.getItem('lastPage') || 'shop';
+    showPage(lastPage);
+});
+setInterval(updateStoreStatus, 60000);
+    </script>
+    
+</body>
+
+</html>
